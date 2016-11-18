@@ -1,0 +1,35 @@
+{
+  "name": "local-devices",
+  "description": "Find devices connected to the current local network.",
+  "version": "1.0.0",
+  "author": "Dylan Piercey <pierceydylan@gmail.com>",
+  "bugs": "https://github.com/DylanPiercey/local-devices/issues",
+  "dependencies": {
+    "ip": "^1.1.4",
+    "mz": "^2.5.0"
+  },
+  "devDependencies": {
+    "snazzy": "^3.0.0",
+    "standard": "^6.0.5"
+  },
+  "homepage": "https://github.com/DylanPiercey/local-devices",
+  "keywords": [
+    "arp",
+    "devices",
+    "ip",
+    "local",
+    "mac",
+    "mac-address",
+    "scan"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DylanPiercey/local-devices"
+  },
+  "scripts": {
+    "lint": "standard --verbose | snazzy",
+    "test": "npm run lint"
+  }
+}
