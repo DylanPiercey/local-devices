@@ -17,7 +17,7 @@ npm install local-devices
 ```javascript
 import find from 'local-devices'
 
-// Find all local network devices
+// Find all local network devices.
 find().then(devices => {
   devices /*
   [
@@ -26,6 +26,17 @@ find().then(devices => {
     { name: '...', ip: '192.168.0.21', mac: '...' },
     { name: '...', ip: '192.168.0.22', mac: '...' }
   ]
+  */
+})
+
+// Find a single device by ip address.
+find('192.168.0.10').then(device => {
+  device /*
+  {
+    name: '?',
+    ip: '192.168.0.10',
+    mac: '...'
+  }
   */
 })
 ```

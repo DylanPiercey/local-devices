@@ -3,17 +3,18 @@ var os = require('os')
 var net = require('net')
 var cp = require('mz/child_process')
 var servers = getServers()
-var lock = null
+var lock = {}
 
 /**
  * Finds all local devices (ip and mac address) connectd to the current network.
  */
-module.exports = function findLocalDevices () {
-  lock = lock || pingServers()
-    .then(scanARP)
-    .then(parseTable)
-    .then(unlock)
-  return lock
+module.exports = function findLocalDevices (address) {
+  var key = String(address)
+  lock[key] = lock[key] || (address
+    ? pingServer(address).then(arpOne)
+    : pingServers().then(arpAll)
+  ).then(unlock(key))
+  return lock[key]
 }
 
 /**
@@ -58,7 +59,7 @@ function pingServer (address) {
 
     function close (err) {
       this.destroy(err)
-      resolve()
+      resolve(address)
     }
   })
 }
@@ -66,20 +67,35 @@ function pingServer (address) {
 /**
  * Reads the arp table.
  */
-function scanARP () {
-  return cp.exec('arp -a')
+function arpAll () {
+  return cp.exec('arp -a').then(parseAll)
 }
 
 /**
  * Parses arp scan data into a useable collection.
  */
-function parseTable (data) {
+function parseAll (data) {
   if (!data || !data[0]) return []
   return data[0]
     .trim()
     .split('\n')
     .map(parseRow)
     .filter(Boolean)
+}
+
+/**
+ * Reads the arp table for a single address.
+ */
+function arpOne (address) {
+  return cp.exec('arp -n ' + address).then(parseOne)
+}
+
+/**
+ * Parses a single row of arp data.
+ */
+function parseOne (data) {
+  if (!data || !data[0]) return
+  return parseRow(data[0])
 }
 
 /**
@@ -111,7 +127,9 @@ function parseRow (row) {
 /**
  * Clears the current promise and unlocks (will ping servers again).
  */
-function unlock (data) {
-  lock = null
-  return data
+function unlock (key) {
+  return function (data) {
+    lock[key] = null
+    return data
+  }
 }
