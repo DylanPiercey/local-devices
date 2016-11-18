@@ -1,23 +1,23 @@
 var ip = require('ip')
 var os = require('os')
+var net = require('net')
 var cp = require('mz/child_process')
-var dgram = require('dgram')
-var message = Buffer.from('ping')
 var servers = getServers()
-var connection = null
+var lock = null
 
 /**
  * Finds all local devices (ip and mac address) connectd to the current network.
  */
 module.exports = function findLocalDevices () {
-  return getConnection()
-    .then(pingServers)
+  lock = lock || pingServers()
     .then(scanARP)
     .then(parseTable)
+    .then(unlock)
+  return lock
 }
 
 /**
- * Gets the current list of dns broadcast servers.
+ * Gets the current list of possible servers in the local networks.
  */
 function getServers () {
   var interfaces = os.networkInterfaces()
@@ -29,7 +29,9 @@ function getServers () {
       var address = addresses[i]
       if (address.family === 'IPv4' && !address.internal) {
         var subnet = ip.subnet(address.address, address.netmask)
-        result.push(subnet.broadcastAddress)
+        var current = ip.toLong(subnet.firstAddress)
+        var last = ip.toLong(subnet.lastAddress) - 1
+        while (current++ < last) result.push(ip.fromLong(current))
       }
     }
   }
@@ -38,50 +40,31 @@ function getServers () {
 }
 
 /**
- * Connects to the dns broadcast server (reuses connection if possible).
+ * Sends a ping to all servers to update the arp table.
  */
-function getConnection () {
-  connection = connection || new Promise(function (resolve, reject) {
-    var connected = false
-    dgram
-      .createSocket('udp4')
-      .bind()
-      .unref()
-      .once('error', function error (err) {
-        if (!connected) return reject(err)
-        connection = getConnection()
-      })
-      .once('listening', function listening () {
-        connected = true
-        this.setBroadcast(true)
-        resolve(this)
-      })
-  })
-
-  return connection
-}
-
-/**
- * Sends a ping to all dns servers to update the arp table.
- */
-function pingServers (client) {
+function pingServers () {
   return Promise.all(servers.map(pingServer))
-
-  /**
-   * Pings and individual dns broadcast server.
-   */
-  function pingServer (address) {
-    return new Promise(function (resolve, reject) {
-      return client.send(message, 0, message.length, 41234, address, function (err) {
-        if (err) reject(err)
-        else resolve()
-      })
-    })
-  }
 }
 
 /**
- * Does an arp scan of the current network.
+ * Pings and individual server to update the arp table.
+ */
+function pingServer (address) {
+  return new Promise(function (resolve, reject) {
+    new net.Socket()
+      .setTimeout(1000, close)
+      .connect(80, address, close)
+      .once('error', close)
+
+    function close (err) {
+      this.destroy(err)
+      resolve()
+    }
+  })
+}
+
+/**
+ * Reads the arp table.
  */
 function scanARP () {
   return cp.exec('arp -a')
@@ -92,24 +75,43 @@ function scanARP () {
  */
 function parseTable (data) {
   if (!data || !data[0]) return []
-  var table = data[0]
-  var result = table.trim().split('\n')
+  return data[0]
+    .trim()
+    .split('\n')
+    .map(parseRow)
+    .filter(Boolean)
+}
 
-  for (var i = result.length; i--;) {
-    var row = result[i]
-    var nameStart = 0
-    var nameEnd = row.indexOf('(') - 1
-    var ipStart = nameEnd + 2
-    var ipEnd = row.indexOf(')')
-    var macStart = row.indexOf(' at ') + 4
-    var macEnd = row.indexOf(' on ')
+/**
+ * Parses each row in the arp table into { name, mac, ip }.
+ */
+function parseRow (row) {
+  var macStart = row.indexOf(' at ') + 4
+  var macEnd = row.indexOf(' on ')
+  var nameStart = 0
+  var nameEnd = row.indexOf('(') - 1
+  var ipStart = nameEnd + 2
+  var ipEnd = row.indexOf(')')
+  var macAddress = row.slice(macStart, macEnd)
+  var ipAddress = row.slice(ipStart, ipEnd)
+  var name = row.slice(nameStart, nameEnd)
 
-    result[i] = {
-      name: row.slice(nameStart, nameEnd),
-      ip: row.slice(ipStart, ipEnd),
-      mac: row.slice(macStart, macEnd)
-    }
+  // Ignore unresolved hosts.
+  if (macAddress === '(incomplete)') return
+  // Only resolve external ips.
+  if (!~servers.indexOf(ipAddress)) return
+
+  return {
+    name: name,
+    mac: macAddress,
+    ip: ipAddress
   }
+}
 
-  return result
+/**
+ * Clears the current promise and unlocks (will ping servers again).
+ */
+function unlock (data) {
+  lock = null
+  return data
 }

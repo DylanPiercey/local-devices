@@ -4,7 +4,7 @@
 # Local Devices
 
 Find all devices connected to the local network using `arp -a`.
-Will ping broadcast addresses to ensure that the local arp table is up to date.
+This module also pings all possible ip's in the local network to build the arp table.
 
 # Installation
 
@@ -15,27 +15,17 @@ npm install local-devices
 
 ## Example
 ```javascript
-import findLocalDevices from 'local-devices'
+import find from 'local-devices'
 
-findLocalDevices().then(devices => {
+// Find all local network devices
+find().then(devices => {
   devices /*
-  [ { name: '...',
-      ip: '192.168.0.1',
-      mac: '...' },
+  [
     { name: '?', ip: '192.168.0.10', mac: '...' },
-    { name: '...',
-      ip: '192.168.0.17',
-      mac: '...' },
-    { name: '...',
-      ip: '192.168.0.21',
-      mac: '...' },
-    { name: '...',
-      ip: '192.168.0.22',
-      mac: '...' },
-    { name: '?', ip: '192.168.0.254', mac: '...' },
-    { name: '?', ip: '192.168.0.255', mac: '...' },
-    { name: '?', ip: '224.0.0.251', mac: '...' },
-    { name: '?', ip: '239.255.255.250', mac: '...' } ]
+    { name: '...', ip: '192.168.0.17', mac: '...' },
+    { name: '...', ip: '192.168.0.21', mac: '...' },
+    { name: '...', ip: '192.168.0.22', mac: '...' }
+  ]
   */
 })
 ```
