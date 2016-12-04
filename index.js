@@ -102,25 +102,29 @@ function parseOne (data) {
  * Parses each row in the arp table into { name, mac, ip }.
  */
 function parseRow (row) {
+  // Parse name.
   var nameStart = 0
   var nameEnd = row.indexOf('(') - 1
-  var macStart = row.indexOf(' at ', nameEnd) + 4
-  var macEnd = row.indexOf(' on ', macStart)
-  var ipStart = nameEnd + 2
-  var ipEnd = row.indexOf(')', ipStart)
-  var macAddress = row.slice(macStart, macEnd)
-  var ipAddress = row.slice(ipStart, ipEnd)
   var name = row.slice(nameStart, nameEnd)
 
-  // Ignore unresolved hosts.
-  if (macAddress === '(incomplete)') return
+  // Parse ip.
+  var ipStart = nameEnd + 2
+  var ipEnd = row.indexOf(')', ipStart)
+  var ipAddress = row.slice(ipStart, ipEnd)
   // Only resolve external ips.
   if (!~servers.indexOf(ipAddress)) return
 
+  // Parse mac
+  var macStart = row.indexOf(' at ', ipEnd) + 4
+  var macEnd = row.indexOf(' on ', macStart)
+  var macAddress = row.slice(macStart, macEnd)
+  // Ignore unresolved hosts.
+  if (macAddress === '(incomplete)') return
+
   return {
     name: name,
-    mac: macAddress,
-    ip: ipAddress
+    ip: ipAddress,
+    mac: macAddress
   }
 }
 
