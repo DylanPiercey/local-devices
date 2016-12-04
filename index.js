@@ -102,12 +102,12 @@ function parseOne (data) {
  * Parses each row in the arp table into { name, mac, ip }.
  */
 function parseRow (row) {
-  var macStart = row.indexOf(' at ') + 4
-  var macEnd = row.indexOf(' on ')
   var nameStart = 0
   var nameEnd = row.indexOf('(') - 1
+  var macStart = row.indexOf(' at ', nameEnd) + 4
+  var macEnd = row.indexOf(' on ', macStart)
   var ipStart = nameEnd + 2
-  var ipEnd = row.indexOf(')')
+  var ipEnd = row.indexOf(')', ipStart)
   var macAddress = row.slice(macStart, macEnd)
   var ipAddress = row.slice(ipStart, ipEnd)
   var name = row.slice(nameStart, nameEnd)
