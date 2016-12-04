@@ -57,8 +57,8 @@ function pingServer (address) {
       .connect(80, address, close)
       .once('error', close)
 
-    function close (err) {
-      this.destroy(err)
+    function close () {
+      this.destroy()
       resolve(address)
     }
   })
