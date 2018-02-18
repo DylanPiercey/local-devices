@@ -120,6 +120,10 @@ function parseRow (row) {
   var macAddress = row.slice(macStart, macEnd)
   // Ignore unresolved hosts.
   if (macAddress === '(incomplete)') return
+  // Format for always 2 digits
+  macAddress = macAddress.replace(/^.:/, '0$&')
+    .replace(/:.(?=:|$)/g, ':0X$&')
+    .replace(/X:/g, '');
 
   return {
     name: name,
