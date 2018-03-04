@@ -9,8 +9,8 @@
     "mz": "^2.6.0"
   },
   "devDependencies": {
-    "snazzy": "^5.0.0",
-    "standard": "^8.6.0"
+    "snazzy": "^7.1.1",
+    "standard": "^11.0.0"
   },
   "homepage": "https://github.com/DylanPiercey/local-devices",
   "keywords": [
