@@ -31,5 +31,6 @@
   "scripts": {
     "lint": "standard --verbose | snazzy",
     "test": "npm run lint"
-  }
+  },
+  "types": "index.d.ts"
 }
