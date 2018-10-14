@@ -15,8 +15,10 @@ npm install local-devices
 
 ## Example
 ```javascript
+//Using a transpiler
 import find from 'local-devices'
-
+//Without using a transpiler
+const find = require('local-devices');
 // Find all local network devices.
 find().then(devices => {
   devices /*
