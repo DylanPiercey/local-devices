@@ -5,12 +5,18 @@
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/DylanPiercey/local-devices/issues",
   "dependencies": {
-    "ip": "^1.1.4",
-    "mz": "^2.6.0"
+    "ip": "1.1.5",
+    "mz": "2.7.0"
   },
   "devDependencies": {
-    "snazzy": "^7.1.1",
-    "standard": "^11.0.0"
+    "husky": "1.2.1",
+    "jest": "23.6.0",
+    "lint-staged": "8.1.0",
+    "snazzy": "7.1.1",
+    "standard": "11.0.0"
+  },
+  "engines": {
+    "node": ">=8.14.1 <9"
   },
   "homepage": "https://github.com/DylanPiercey/local-devices",
   "keywords": [
@@ -23,14 +29,42 @@
     "scan"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "src/index.js",
+  "files": [
+    "src/index.js",
+    "src/index.d.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/DylanPiercey/local-devices"
   },
   "scripts": {
     "lint": "standard --verbose | snazzy",
-    "test": "npm run lint"
+    "test": "npm run lint && jest",
+    "precommit": "lint-staged",
+    "prepush": "npm run test",
+    "watch-test": "jest --watch"
   },
-  "types": "index.d.ts"
+  "types": "<rootDir>/src/index.d.ts",
+  "lint-staged": {
+    "*.js": [
+      "npm run lint",
+      "git update-index --again",
+      "jest --findRelatedTests"
+    ]
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/jest-setup.js"
+    ]
+  },
+  "standard": {
+    "globals": [
+      "jest",
+      "describe",
+      "beforeAll",
+      "it",
+      "expect"
+    ]
+  }
 }

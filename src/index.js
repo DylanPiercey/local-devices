@@ -10,15 +10,18 @@ var lock = {}
  */
 module.exports = function findLocalDevices (address) {
   var key = String(address)
-  lock[key] = lock[key] || (address
-    ? pingServer(address).then(arpOne)
-    : pingServers().then(arpAll)
-  ).then(unlock(key))
+  lock[key] =
+    lock[key] ||
+    (address
+      ? pingServer(address).then(arpOne)
+      : pingServers().then(arpAll)
+    ).then(unlock(key))
   return lock[key]
 }
 
 /**
  * Gets the current list of possible servers in the local networks.
+ * TODO: mock in tests
  */
 function getServers () {
   var interfaces = os.networkInterfaces()
@@ -51,14 +54,15 @@ function pingServers () {
  * Pings and individual server to update the arp table.
  */
 function pingServer (address) {
-  return new Promise(function (resolve, reject) {
-    new net.Socket()
-      .setTimeout(1000, close)
-      .connect(80, address, close)
-      .once('error', close)
+  return new Promise(function (resolve) {
+    // https://stackoverflow.com/a/51986121/1238150
+    const socket = new net.Socket()
+    socket.setTimeout(1000, close)
+    socket.connect(80, address, close)
+    socket.once('error', close)
 
     function close () {
-      this.destroy()
+      socket.destroy()
       resolve(address)
     }
   })
@@ -75,7 +79,16 @@ function arpAll () {
  * Parses arp scan data into a useable collection.
  */
 function parseAll (data) {
-  if (!data || !data[0]) return []
+  if (!data || !data[0]) {
+    return []
+  }
+
+  // detect OS
+  const platform = process.platform
+  if (platform.includes('linux')) {
+    return parseLinux(data, true)
+  }
+
   return data[0]
     .trim()
     .split('\n')
@@ -94,12 +107,21 @@ function arpOne (address) {
  * Parses a single row of arp data.
  */
 function parseOne (data) {
-  if (!data || !data[0]) return
+  if (!data || !data[0]) {
+    return
+  }
+
+  // detect OS
+  const platform = process.platform
+  if (platform.includes('linux')) {
+    return parseLinux(data)
+  }
+
   return parseRow(data[0])
 }
 
 /**
- * Parses each row in the arp table into { name, mac, ip }.
+ * Parses each row in the arp table into { name, ip, mac } on MACOSX.
  */
 function parseRow (row) {
   // Parse name.
@@ -112,16 +134,21 @@ function parseRow (row) {
   var ipEnd = row.indexOf(')', ipStart)
   var ipAddress = row.slice(ipStart, ipEnd)
   // Only resolve external ips.
-  if (!~servers.indexOf(ipAddress)) return
+  if (!~servers.indexOf(ipAddress)) {
+    return
+  }
 
   // Parse mac
   var macStart = row.indexOf(' at ', ipEnd) + 4
   var macEnd = row.indexOf(' on ', macStart)
   var macAddress = row.slice(macStart, macEnd)
   // Ignore unresolved hosts.
-  if (macAddress === '(incomplete)') return
+  if (macAddress === '(incomplete)') {
+    return
+  }
   // Format for always 2 digits
-  macAddress = macAddress.replace(/^.:/, '0$&')
+  macAddress = macAddress
+    .replace(/^.:/, '0$&')
     .replace(/:.(?=:|$)/g, ':0X$&')
     .replace(/X:/g, '')
 
@@ -130,6 +157,39 @@ function parseRow (row) {
     ip: ipAddress,
     mac: macAddress
   }
+}
+
+/**
+ * Parses each row in the arp table into { name, ip, mac } on LINUX.
+ */
+function parseLinux (data, parseMultiple = false) {
+  // partial inspired by https://github.com/goliatone/arpscan/blob/master/lib/arpscanner.js
+  const out = []
+  const rows = data.split('\n').slice(parseMultiple ? 0 : 1)
+
+  // Parses each row in the arp table into { name, ip, mac }.
+  rows.forEach(row => {
+    if (row === '') {
+      return
+    }
+    const chunk = row.split(' ').filter(Boolean)
+
+    if (parseMultiple) {
+      return out.push({
+        name: chunk[0],
+        ip: chunk[1].match(/\((.*)\)/)[1],
+        mac: chunk[3]
+      })
+    }
+
+    out.push({
+      name: '?', // does not provide a device name
+      ip: chunk[0],
+      mac: chunk[2]
+    })
+  })
+
+  return out
 }
 
 /**
