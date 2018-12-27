@@ -65,6 +65,7 @@
       "jest",
       "describe",
       "beforeAll",
+      "afterAll",
       "it",
       "expect"
     ]
