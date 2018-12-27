@@ -163,13 +163,20 @@ function parseRow (row) {
  * Parses each row in the arp table into { name, ip, mac } on LINUX.
  */
 function parseLinux (data, parseMultiple = false) {
+  console.log('data', data); // eslint-disable-line 
+  // ignore unresolved hosts (can happen when parseOne returns only one unresolved host)
+  if (data.indexOf('no entry') >= 0) {
+    return
+  }
+
   // partial inspired by https://github.com/goliatone/arpscan/blob/master/lib/arpscanner.js
   const out = []
   const rows = data.split('\n').slice(parseMultiple ? 0 : 1)
 
   // Parses each row in the arp table into { name, ip, mac }.
   rows.forEach(row => {
-    if (row === '') {
+    // Ignore unresolved hosts.
+    if (row === '' || row.indexOf('incomplete') >= 0) {
       return
     }
     const chunk = row.split(' ').filter(Boolean)
@@ -189,7 +196,8 @@ function parseLinux (data, parseMultiple = false) {
     })
   })
 
-  return out
+  const result = out.filter(Boolean)
+  return result.length ? result : undefined;
 }
 
 /**
