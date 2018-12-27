@@ -32,7 +32,9 @@
   "main": "src/index.js",
   "files": [
     "src/index.js",
-    "src/index.d.ts"
+    "src/index.d.ts",
+    "src/parser/linux.js",
+    "src/parser/index.js"
   ],
   "repository": {
     "type": "git",

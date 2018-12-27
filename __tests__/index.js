@@ -12,7 +12,6 @@ const mockHosts = [
 
 jest.mock('mz/child_process', () => ({
   exec: jest.fn(command => {
-    // NOTE: arp returns an array on MacOSX
     // first filter all special case examples from the mockHost list (eg. no entry)
     const workingHosts = mockHosts.filter(i => i.indexOf('no entry') < 0)
     let r = [workingHosts.join('\n')]

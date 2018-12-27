@@ -22,18 +22,18 @@ jest.mock('mz/child_process', () => ({
       const ip = command.match(/arp -(.*){1} (.*)/)[2]
       const host = mockHosts.find(i => i.indexOf(ip) >= 0)
 
+      // and finally prepare the arp output for the tests
       if (host.indexOf('no entry') >= 0) {
         r = host
       } else {
         const macAddress = host.split(' ')[3]
-        // and finally prepare the arp output for the tests
         r = `Address                  HWtype  HWaddress           Flags Mask            Iface
 ${ip}             ether   ${macAddress}   C                     eth0`
       }
     }
 
     // before resolving the promise
-    return new Promise(resolve => resolve(r))
+    return new Promise(resolve => resolve([r]))
   })
 }))
 
@@ -57,9 +57,9 @@ describe('local-devices (linux)', () => {
 
   it('returns the result of a single IP', async () => {
     const result = await find('192.168.0.222')
-    expect(result).toEqual([
+    expect(result).toEqual(
       { name: '?', ip: '192.168.0.222', mac: '00:12:34:56:78:92' }
-    ])
+    )
   })
 
   it('returns undefined, when the host is not resolved', async () => {

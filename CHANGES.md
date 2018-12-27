@@ -8,10 +8,10 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Support for Raspberry Pi devices
-- Jest test suite and tests for Linux and MacOSX
+- Support for Raspberry Pi (Linux)
+- Jest test suite and tests for Linux and other platforms
   
 ### Changed
 
 - fixed npm module versions in package.json
-- fixed node version to v10.14.2
+- fixed node version to v8.14.1
