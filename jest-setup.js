@@ -21,6 +21,16 @@ const mockLinuxHosts = [
   '192.168.0.243 (192.168.0.243) -- no entry' // host has no entry in the arp table
 ]
 
+/* eslint-disable */
+// NOTE: may not cover all test cases yet
+const mockWinHosts = [
+  '192.168.0.202	00-12-34-56-78-90	dynamic',
+  '192.168.0.212	00-12-34-56-78-91	dynamic',
+  '192.168.0.222	00-12-34-56-78-92	dynamic',
+  '192.168.0.232	00-12-34-56-78-93	dynamic'
+]
+/* eslint-enable */
+
 function mockPrepareHosts (command) {
   // first filter all special case examples from the mockHost list (eg. no entry)
   const workingHosts = mockHosts.filter(i => i.indexOf('no entry') < 0)
@@ -58,11 +68,27 @@ ${ip}             ether   ${macAddress}   C                     eth0`
   return r
 }
 
+function mockPrepareWin (command) {
+  // first filter all special case examples from the mockHost list (eg. no entry)
+  const workingHosts = mockWinHosts.filter(i => i.indexOf('no entry') < 0)
+  /* eslint-disable-next-line */
+  workingHosts.unshift('Internet Address	Physical Address	Type')
+  let r = workingHosts.join('\n')
+
+  if (command.includes('-n')) {
+    // only for TESTS, win32 will return the manual text instead
+    r = 'scanning a specific IP is not supported on Windows with local-devices'
+  }
+  return r
+}
+
 jest.mock('mz/child_process', () => ({
   exec: jest.fn(command => {
     var r = mockPrepareHosts(command)
     if (process.platform === 'linux') {
       r = mockPrepareLinuxHosts(command)
+    } else if (process.platform === 'win32') {
+      r = mockPrepareWin(command)
     }
     return new Promise(resolve => resolve([r]))
   })

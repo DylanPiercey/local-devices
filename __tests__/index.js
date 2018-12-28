@@ -3,7 +3,8 @@ const find = require('../src/index')
 describe('local-devices', () => {
   const platforms = [
     'linux',
-    'darwin'
+    'darwin',
+    'win32'
   ]
 
   beforeAll(() => {
@@ -34,8 +35,15 @@ describe('local-devices', () => {
         ])
       })
 
-      it('returns the result of a single IP', async () => {
+      it('returns the result of a single IP (Note: undefined on win32)', async () => {
         const result = await find('192.168.0.222')
+
+        if (process.platform.includes('win32')) {
+          // not supported yet
+          expect(result).toBeUndefined()
+          return
+        }
+
         expect(result).toEqual(
           { name: '?', ip: '192.168.0.222', mac: '00:12:34:56:78:92' }
         )

@@ -33,8 +33,9 @@
   "files": [
     "src/index.js",
     "src/index.d.ts",
+    "src/parser/index.js",
     "src/parser/linux.js",
-    "src/parser/index.js"
+    "src/parser/win32.js"
   ],
   "repository": {
     "type": "git",

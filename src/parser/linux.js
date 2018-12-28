@@ -1,9 +1,11 @@
 /**
- * Parses each row in the arp table into { name, ip, mac } on LINUX.
+ * Parses each row in the arp table into { name, ip, mac } on linux.
  *
  * partially inspired by https://github.com/goliatone/arpscan/blob/master/lib/arpscanner.js
  */
-module.exports = function parseLinux (row, parseOne) {
+module.exports = function parseLinux (row, servers, parseOne) {
+  var result = {}
+
   // Ignore unresolved hosts.
   if (row === '' || row.indexOf('incomplete') >= 0) {
     return
@@ -11,10 +13,17 @@ module.exports = function parseLinux (row, parseOne) {
 
   var chunks = row.split(' ').filter(Boolean)
   if (parseOne) {
-    return prepareOne(chunks)
+    result = prepareOne(chunks)
   } else {
-    return prepareAll(chunks)
+    result = prepareAll(chunks)
   }
+
+  // Only resolve external ips.
+  if (!~servers.indexOf(result.ip)) {
+    return
+  }
+
+  return result
 }
 
 function prepareOne (chunks) {

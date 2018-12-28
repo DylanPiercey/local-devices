@@ -4,6 +4,7 @@ var net = require('net')
 var cp = require('mz/child_process')
 
 var parseLinux = require('./parser/linux')
+var parseWin32 = require('./parser/win32')
 var parseRow = require('./parser')
 
 var servers = getServers()
@@ -91,7 +92,12 @@ function parseAll (data) {
   if (process.platform.includes('linux')) {
     var rows = data[0].split('\n')
     return rows.map(function (row) {
-      return parseLinux(row)
+      return parseLinux(row, servers)
+    }).filter(Boolean)
+  } else if (process.platform.includes('win32')) {
+    var winRows = data[0].split('\n').splice(1)
+    return winRows.map(function (row) {
+      return parseWin32(row, servers)
     }).filter(Boolean)
   }
 
@@ -127,7 +133,9 @@ function parseOne (data) {
 
     // remove first row (containing "headlines")
     var rows = data[0].split('\n').slice(1)[0]
-    return parseLinux(rows, true)
+    return parseLinux(rows, servers, true)
+  } else if (process.platform.includes('win32')) {
+    return // currently not supported
   }
 
   return parseRow(data[0], servers)
