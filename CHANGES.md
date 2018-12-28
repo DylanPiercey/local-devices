@@ -11,6 +11,7 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Support for Raspberry Pi (Linux)
 - Partial support for windows
 - Jest test suite and tests for Linux and other platforms
+- with Travis CI integration
   
 ### Changed
 

@@ -109,3 +109,37 @@ jest.mock('net', () => ({
     })
   }))
 }))
+
+jest.mock('os', () => ({
+  // example mock for darwin (MacOSX)
+  networkInterfaces: jest.fn().mockReturnValue({
+    lo0:
+      [{
+        address: '127.0.0.1',
+        netmask: '255.0.0.0',
+        family: 'IPv4',
+        mac: '00:00:00:00:00:00',
+        internal: true,
+        cidr: '127.0.0.1/8'
+      }],
+    utun0:
+      [{
+        address: 'as12::d3f4:56j:k789:0l00',
+        netmask: 'ffff:ffff:ffff:ffff::',
+        family: 'IPv6',
+        mac: '00:00:00:00:00:00',
+        scopeid: 11,
+        internal: false,
+        cidr: 'as12::d3f4:56j:k789:0l00/64'
+      }],
+    en5:
+      [{
+        address: '192.168.0.200',
+        netmask: '255.255.255.0',
+        family: 'IPv4',
+        mac: '00:12:34:56:78:99',
+        internal: false,
+        cidr: '192.168.0.200/24'
+      }]
+  })
+}))

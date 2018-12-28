@@ -26,8 +26,6 @@ module.exports = function findLocalDevices (address) {
 
 /**
  * Gets the current list of possible servers in the local networks.
- *
- * TODO: mock in tests (eg. also offline case)
  */
 function getServers () {
   var interfaces = os.networkInterfaces()

@@ -6,6 +6,8 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 
+[![Build Status][build-badge]][build]
+[![Coverage Status][coverage-badge]][coverage]
 [![Watch on GitHub][github-watch-badge]][github-watch]
 [![Star on GitHub][github-star-badge]][github-star]
 
@@ -87,3 +89,9 @@ Contributions of any kind are welcome!
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
+
+<!-- Currently attached to natterstefan's account -->
+[build-badge]: https://api.travis-ci.org/natterstefan/local-devices.svg?branch=master
+[build]: https://travis-ci.org/natterstefan/local-devices
+[coverage-badge]: https://coveralls.io/repos/github/natterstefan/local-devices/badge.svg?branch=master
+[coverage]: https://coveralls.io/github/natterstefan/local-devices?branch=master
