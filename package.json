@@ -16,7 +16,7 @@
     "standard": "11.0.0"
   },
   "engines": {
-    "node": ">=8.14.1 <9"
+    "node": ">=8.14.1"
   },
   "homepage": "https://github.com/DylanPiercey/local-devices",
   "keywords": [
@@ -42,8 +42,10 @@
     "url": "https://github.com/DylanPiercey/local-devices"
   },
   "scripts": {
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "lint": "standard --verbose | snazzy",
-    "test": "npm run lint && jest",
+    "test": "jest",
+    "pretest": "npm run lint",
     "precommit": "lint-staged",
     "prepush": "npm run test",
     "watch-test": "jest --watch"

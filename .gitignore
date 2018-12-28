@@ -14,3 +14,4 @@ npm-debug.log
 # Testing
 test/run.js
 coverage
+.coveralls.yml
