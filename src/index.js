@@ -59,7 +59,6 @@ function pingServers () {
  */
 function pingServer (address) {
   return new Promise(function (resolve) {
-    // https://stackoverflow.com/a/51986121/1238150
     var socket = new net.Socket()
     socket.setTimeout(1000, close)
     socket.connect(80, address, close)

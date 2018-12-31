@@ -5,8 +5,8 @@
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/DylanPiercey/local-devices/issues",
   "dependencies": {
-    "ip": "1.1.5",
-    "mz": "2.7.0"
+    "ip": "^1.1.5",
+    "mz": "^2.7.0"
   },
   "devDependencies": {
     "coveralls": "3.0.2",
@@ -32,11 +32,7 @@
   "license": "MIT",
   "main": "src/index.js",
   "files": [
-    "src/index.js",
-    "src/index.d.ts",
-    "src/parser/index.js",
-    "src/parser/linux.js",
-    "src/parser/win32.js"
+    "src"
   ],
   "repository": {
     "type": "git",
@@ -47,11 +43,15 @@
     "lint": "standard --verbose | snazzy",
     "test": "jest",
     "pretest": "npm run lint",
-    "precommit": "lint-staged",
-    "prepush": "npm run test",
     "watch-test": "jest --watch"
   },
-  "types": "<rootDir>/src/index.d.ts",
+  "types": "./src/index.d.ts",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  },
   "lint-staged": {
     "*.js": [
       "npm run lint",
@@ -61,7 +61,7 @@
   },
   "jest": {
     "setupFiles": [
-      "<rootDir>/jest-setup.js"
+      "./jest-setup.js"
     ]
   },
   "standard": {
