@@ -1,0 +1,21 @@
+language: node_js
+
+node_js:
+  - '8'
+  - '10'
+
+script:
+  - npm run test
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+
+after_success: 'npm run coveralls'
+
+cache:
+  directories:
+    - ~/.npm # cache npm's cache
+    - ~/npm # cache latest npm
+    - node_modules # npm install, unlike npm ci, doesn't wipe node_modules

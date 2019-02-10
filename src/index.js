@@ -2,6 +2,11 @@ var ip = require('ip')
 var os = require('os')
 var net = require('net')
 var cp = require('mz/child_process')
+
+var parseLinux = require('./parser/linux')
+var parseWin32 = require('./parser/win32')
+var parseRow = require('./parser')
+
 var servers = getServers()
 var lock = {}
 
@@ -10,10 +15,12 @@ var lock = {}
  */
 module.exports = function findLocalDevices (address) {
   var key = String(address)
-  lock[key] = lock[key] || (address
-    ? pingServer(address).then(arpOne)
-    : pingServers().then(arpAll)
-  ).then(unlock(key))
+  lock[key] =
+    lock[key] ||
+    (address
+      ? pingServer(address).then(arpOne)
+      : pingServers().then(arpAll)
+    ).then(unlock(key))
   return lock[key]
 }
 
@@ -51,14 +58,14 @@ function pingServers () {
  * Pings and individual server to update the arp table.
  */
 function pingServer (address) {
-  return new Promise(function (resolve, reject) {
-    new net.Socket()
-      .setTimeout(1000, close)
-      .connect(80, address, close)
-      .once('error', close)
+  return new Promise(function (resolve) {
+    var socket = new net.Socket()
+    socket.setTimeout(1000, close)
+    socket.connect(80, address, close)
+    socket.once('error', close)
 
     function close () {
-      this.destroy()
+      socket.destroy()
       resolve(address)
     }
   })
@@ -75,11 +82,28 @@ function arpAll () {
  * Parses arp scan data into a useable collection.
  */
 function parseAll (data) {
-  if (!data || !data[0]) return []
+  if (!data || !data[0]) {
+    return []
+  }
+
+  if (process.platform.includes('linux')) {
+    var rows = data[0].split('\n')
+    return rows.map(function (row) {
+      return parseLinux(row, servers)
+    }).filter(Boolean)
+  } else if (process.platform.includes('win32')) {
+    var winRows = data[0].split('\n').splice(1)
+    return winRows.map(function (row) {
+      return parseWin32(row, servers)
+    }).filter(Boolean)
+  }
+
   return data[0]
     .trim()
     .split('\n')
-    .map(parseRow)
+    .map(function (row) {
+      return parseRow(row, servers)
+    })
     .filter(Boolean)
 }
 
@@ -94,42 +118,24 @@ function arpOne (address) {
  * Parses a single row of arp data.
  */
 function parseOne (data) {
-  if (!data || !data[0]) return
-  return parseRow(data[0])
-}
-
-/**
- * Parses each row in the arp table into { name, mac, ip }.
- */
-function parseRow (row) {
-  // Parse name.
-  var nameStart = 0
-  var nameEnd = row.indexOf('(') - 1
-  var name = row.slice(nameStart, nameEnd)
-
-  // Parse ip.
-  var ipStart = nameEnd + 2
-  var ipEnd = row.indexOf(')', ipStart)
-  var ipAddress = row.slice(ipStart, ipEnd)
-  // Only resolve external ips.
-  if (!~servers.indexOf(ipAddress)) return
-
-  // Parse mac
-  var macStart = row.indexOf(' at ', ipEnd) + 4
-  var macEnd = row.indexOf(' on ', macStart)
-  var macAddress = row.slice(macStart, macEnd)
-  // Ignore unresolved hosts.
-  if (macAddress === '(incomplete)') return
-  // Format for always 2 digits
-  macAddress = macAddress.replace(/^.:/, '0$&')
-    .replace(/:.(?=:|$)/g, ':0X$&')
-    .replace(/X:/g, '')
-
-  return {
-    name: name,
-    ip: ipAddress,
-    mac: macAddress
+  if (!data || !data[0]) {
+    return
   }
+
+  if (process.platform.includes('linux')) {
+    // ignore unresolved hosts (can happen when parseOne returns only one unresolved host)
+    if (data[0].indexOf('no entry') >= 0) {
+      return
+    }
+
+    // remove first row (containing "headlines")
+    var rows = data[0].split('\n').slice(1)[0]
+    return parseLinux(rows, servers, true)
+  } else if (process.platform.includes('win32')) {
+    return // currently not supported
+  }
+
+  return parseRow(data[0], servers)
 }
 
 /**

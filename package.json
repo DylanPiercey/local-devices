@@ -5,12 +5,19 @@
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/DylanPiercey/local-devices/issues",
   "dependencies": {
-    "ip": "^1.1.4",
-    "mz": "^2.6.0"
+    "ip": "^1.1.5",
+    "mz": "^2.7.0"
   },
   "devDependencies": {
-    "snazzy": "^7.1.1",
-    "standard": "^11.0.0"
+    "coveralls": "3.0.2",
+    "husky": "1.2.1",
+    "jest": "23.6.0",
+    "lint-staged": "8.1.0",
+    "snazzy": "7.1.1",
+    "standard": "11.0.0"
+  },
+  "engines": {
+    "node": ">=8.14.1"
   },
   "homepage": "https://github.com/DylanPiercey/local-devices",
   "keywords": [
@@ -23,14 +30,48 @@
     "scan"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/DylanPiercey/local-devices"
   },
   "scripts": {
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "lint": "standard --verbose | snazzy",
-    "test": "npm run lint"
+    "test": "jest",
+    "pretest": "npm run lint",
+    "watch-test": "jest --watch"
   },
-  "types": "index.d.ts"
+  "types": "./src/index.d.ts",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint",
+      "git update-index --again",
+      "jest --findRelatedTests"
+    ]
+  },
+  "jest": {
+    "setupFiles": [
+      "./jest-setup.js"
+    ]
+  },
+  "standard": {
+    "globals": [
+      "jest",
+      "describe",
+      "beforeAll",
+      "afterAll",
+      "it",
+      "expect"
+    ]
+  }
 }
