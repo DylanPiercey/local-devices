@@ -2,7 +2,7 @@
  * Parses each row in the arp table into { name, ip, mac } on win32.
  */
 module.exports = function parseRow (row, servers) {
-  var chunks = row.split('\t')
+  var chunks = row.split(' ').filter(function (el) { return el.length > 1 });
 
   // Parse name.
   var ipAddress = chunks[0]
