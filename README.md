@@ -90,7 +90,7 @@ Contributions of any kind are welcome!
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 
-[build-badge]: https://api.travis-ci.org/dylanpiercey/local-devices.svg?branch=master
-[build]: https://travis-ci.org/dylanpiercey/local-devices
-[coverage-badge]: https://coveralls.io/repos/github/dylanpiercey/local-devices/badge.svg?branch=master
-[coverage]: https://coveralls.io/github/dylanpiercey/local-devices?branch=master
+[build-badge]: https://travis-ci.org/DylanPiercey/local-devices.svg?branch=master
+[build]: https://travis-ci.org/DylanPiercey/local-devices
+[coverage-badge]: https://coveralls.io/repos/github/DylanPiercey/local-devices/badge.svg?branch=master
+[coverage]: https://coveralls.io/github/DylanPiercey/local-devices?branch=master
