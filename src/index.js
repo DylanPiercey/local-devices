@@ -10,6 +10,11 @@ var parseRow = require('./parser')
 var servers = getServers()
 var lock = {}
 
+const TEN_MEGA_BYTE = 1024 * 1024 * 10
+const options = {
+  maxBuffer: TEN_MEGA_BYTE
+}
+
 /**
  * Finds all local devices (ip and mac address) connectd to the current network.
  */
@@ -75,7 +80,7 @@ function pingServer (address) {
  * Reads the arp table.
  */
 function arpAll () {
-  return cp.exec('arp -a').then(parseAll)
+  return cp.exec('arp -a', options).then(parseAll)
 }
 
 /**
@@ -111,7 +116,7 @@ function parseAll (data) {
  * Reads the arp table for a single address.
  */
 function arpOne (address) {
-  return cp.exec('arp -n ' + address).then(parseOne)
+  return cp.exec('arp -n ' + address, options).then(parseOne)
 }
 
 /**
