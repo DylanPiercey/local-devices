@@ -2,6 +2,7 @@ const find = require('../src/index')
 var cp = require('mz/child_process')
 
 const TEN_MEGA_BYTE = 1024 * 1024 * 10
+const MAX_ARP_TIME = 60 * 60 * 10
 
 describe('local-devices', () => {
   const platforms = [
@@ -64,12 +65,12 @@ describe('local-devices', () => {
 
       it('invokes cp.exec with maxBuffer of 10 MB, when invoking find without an ip', async () => {
         await find()
-        expect(cp.exec).toHaveBeenCalledWith('arp -a', { 'maxBuffer': TEN_MEGA_BYTE })
+        expect(cp.exec).toHaveBeenCalledWith('arp -a', { 'maxBuffer': TEN_MEGA_BYTE, 'timeout': MAX_ARP_TIME })
       })
 
       it('invokes cp.exec with maxBuffer of 10 MB, when invoking find with a single ip', async () => {
         await find('192.168.0.242')
-        expect(cp.exec).toHaveBeenCalledWith('arp -n 192.168.0.242', { 'maxBuffer': TEN_MEGA_BYTE })
+        expect(cp.exec).toHaveBeenCalledWith('arp -n 192.168.0.242', { 'maxBuffer': TEN_MEGA_BYTE, 'timeout': MAX_ARP_TIME })
       })
     })
   })
