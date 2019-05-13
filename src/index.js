@@ -11,8 +11,10 @@ var servers = getServers()
 var lock = {}
 
 const TEN_MEGA_BYTE = 1024 * 1024 * 10
+const ONE_MINUTE = 60 * 1000
 const options = {
-  maxBuffer: TEN_MEGA_BYTE
+  maxBuffer: TEN_MEGA_BYTE,
+  timeout: ONE_MINUTE
 }
 
 /**
