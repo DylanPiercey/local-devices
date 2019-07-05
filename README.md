@@ -3,7 +3,7 @@
 [![version][version-badge]][package]
 [![MIT License][license-badge]][licence]
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 
 [![Build Status][build-badge]][build]
@@ -64,14 +64,33 @@ Please feel free to create a PR!
 
 Thanks goes to these wonderful people ([emoji key][emojis]):
 
-<!-- ALL-CONTRIBUTORS-LIST:START -->
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars.githubusercontent.com/u/4985201?v=3" width="100px;"/><br /><sub><b>Dylan Piercey</b></sub>](https://github.com/DylanPiercey)<br />[💬](#question-local-devices "Answering Questions") [💻](https://github.com/DylanPiercey/local-devices/commits?author=DylanPiercey "Code") [📖](https://github.com/DylanPiercey/local-devices/commits?author=DylanPiercey "Documentation") [💡](#ideas-planning-local-devices "Examples") [🤔](#ideas-planning-local-devices "Ideas & Planning") [👀](#review-local-devices "Reviewed Pull Requests") | [<img src="https://avatars.githubusercontent.com/u/1043668?v=3" width="100px;"/><br /><sub><b>Stefan Natter</b></sub>](https://github.com/natterstefan)<br />[🐛](https://github.com/DylanPiercey/local-devices/issues?q=author%3Anatterstefan "Bug Reports") [💻](https://github.com/DylanPiercey/local-devices/commits?author=natterstefan "Code") [📖](https://github.com/DylanPiercey/local-devices/commits?author=natterstefan "Documentation") [🤔](#ideas-planning-local-devices "Ideas & Planning") [⚠️](https://github.com/DylanPiercey/local-devices/commits?author=natterstefan "Tests") | [<img src="https://avatars.githubusercontent.com/u/11466138?v=3" width="100px;"/><br /><sub><b>kounelios13</b></sub>](https://github.com/kounelios13)<br />[🐛](https://github.com/DylanPiercey/local-devices/issues?q=author%3Anatterstefan "Bug Reports") [📖](https://github.com/DylanPiercey/local-devices/commits?author=kounelios13 "Documentation") | [<img src="https://avatars.githubusercontent.com/u/2037007?v=3" width="100px;"/><br /><sub><b>Markus Suomi</b></sub>](https://github.com/MarkusSuomi)<br />[💻](https://github.com/DylanPiercey/local-devices/commits?author=MarkusSuomi "Code") | [<img src="https://avatars.githubusercontent.com/u/214998?v=3" width="100px;"/><br /><sub><b>Xavier Martin</b></sub>](https://github.com/nolazybits)<br />[💻](https://github.com/DylanPiercey/local-devices/commits?author=nolazybits "Code") |
-| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+<table>
+  <tr>
+    <td align="center"><a href="https://twitter.com/dylan_piercey"><img src="https://avatars2.githubusercontent.com/u/4985201?v=4" width="100px;" alt="Dylan Piercey"/><br /><sub><b>Dylan Piercey</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=DylanPiercey" title="Code">💻</a> <a href="#example-DylanPiercey" title="Examples">💡</a> <a href="#review-DylanPiercey" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/DylanPiercey/local-devices/commits?author=DylanPiercey" title="Documentation">📖</a> <a href="#ideas-DylanPiercey" title="Ideas, Planning, & Feedback">🤔</a> <a href="#question-DylanPiercey" title="Answering Questions">💬</a></td>
+    <td align="center"><a href="http://twitter.com/natterstefan"><img src="https://avatars2.githubusercontent.com/u/1043668?v=4" width="100px;" alt="Stefan Natter"/><br /><sub><b>Stefan Natter</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=natterstefan" title="Code">💻</a> <a href="https://github.com/DylanPiercey/local-devices/commits?author=natterstefan" title="Tests">⚠️</a> <a href="https://github.com/DylanPiercey/local-devices/issues?q=author%3Anatterstefan" title="Bug reports">🐛</a> <a href="https://github.com/DylanPiercey/local-devices/commits?author=natterstefan" title="Documentation">📖</a> <a href="#ideas-natterstefan" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/kounelios13"><img src="https://avatars3.githubusercontent.com/u/11466138?v=4" width="100px;" alt="kounelios13"/><br /><sub><b>kounelios13</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/issues?q=author%3Akounelios13" title="Bug reports">🐛</a> <a href="https://github.com/DylanPiercey/local-devices/commits?author=kounelios13" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/MarkusSuomi"><img src="https://avatars3.githubusercontent.com/u/5594334?v=4" width="100px;" alt="MarkusSuomi"/><br /><sub><b>MarkusSuomi</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=MarkusSuomi" title="Code">💻</a></td>
+    <td align="center"><a href="http://nolazybits.com"><img src="https://avatars1.githubusercontent.com/u/214998?v=4" width="100px;" alt="Xavier Martin"/><br /><sub><b>Xavier Martin</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=nolazybits" title="Code">💻</a></td>
+    <td align="center"><a href="https://me.howel52.com/"><img src="https://avatars0.githubusercontent.com/u/9854818?v=4" width="100px;" alt="howel52"/><br /><sub><b>howel52</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=howel52" title="Code">💻</a> <a href="https://github.com/DylanPiercey/local-devices/issues?q=author%3Ahowel52" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/LucaSoldi"><img src="https://avatars0.githubusercontent.com/u/5584781?v=4" width="100px;" alt="LucaSoldi"/><br /><sub><b>LucaSoldi</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=LucaSoldi" title="Code">💻</a> <a href="https://github.com/DylanPiercey/local-devices/issues?q=author%3ALucaSoldi" title="Bug reports">🐛</a></td>
+  </tr>
+</table>
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
 Contributions of any kind are welcome!
+
+### How to add Contributors
+
+Contributors can be added with the [all-contributors cli](https://allcontributors.org/docs/en/cli/installation).
+The cli is already installed and can be [used like this](https://allcontributors.org/docs/en/bot/usage):
+
+```bash
+yarn all-contributors add <username> <emoji-keys>
+```
 
 ## LICENCE
 

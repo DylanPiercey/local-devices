@@ -1,0 +1,90 @@
+{
+  "projectName": "local-devices",
+  "projectOwner": "DylanPiercey",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "eslint",
+  "contributors": [
+    {
+      "login": "DylanPiercey",
+      "name": "Dylan Piercey",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4985201?v=4",
+      "profile": "https://twitter.com/dylan_piercey",
+      "contributions": [
+        "code",
+        "example",
+        "review",
+        "doc",
+        "ideas",
+        "question"
+      ]
+    },
+    {
+      "login": "natterstefan",
+      "name": "Stefan Natter",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1043668?v=4",
+      "profile": "http://twitter.com/natterstefan",
+      "contributions": [
+        "code",
+        "test",
+        "bug",
+        "doc",
+        "ideas"
+      ]
+    },
+    {
+      "login": "kounelios13",
+      "name": "kounelios13",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11466138?v=4",
+      "profile": "https://github.com/kounelios13",
+      "contributions": [
+        "bug",
+        "doc"
+      ]
+    },
+    {
+      "login": "MarkusSuomi",
+      "name": "MarkusSuomi",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5594334?v=4",
+      "profile": "https://github.com/MarkusSuomi",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "nolazybits",
+      "name": "Xavier Martin",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/214998?v=4",
+      "profile": "http://nolazybits.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "howel52",
+      "name": "howel52",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/9854818?v=4",
+      "profile": "https://me.howel52.com/",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "LucaSoldi",
+      "name": "LucaSoldi",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5584781?v=4",
+      "profile": "https://github.com/LucaSoldi",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
