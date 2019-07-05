@@ -118,6 +118,10 @@ function parseAll (data) {
  * Reads the arp table for a single address.
  */
 function arpOne (address) {
+  if (!ip.isV4Format(address) && !ip.isV6Format(address)) {
+    return Promise.reject(new Error('Invalid IP address provided.'))
+  }
+
   return cp.exec('arp -n ' + address, options).then(parseOne)
 }
 
