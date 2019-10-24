@@ -23,17 +23,17 @@
     "mz": "^2.7.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.15",
-    "all-contributors-cli": "^6.7.0",
-    "coveralls": "^3.0.4",
-    "husky": "^2.4.1",
-    "jest": "^24.8.0",
-    "lint-staged": "^8.2.1",
+    "@types/jest": "^24.0.19",
+    "all-contributors-cli": "^6.9.3",
+    "coveralls": "^3.0.7",
+    "husky": "^3.0.9",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.4.2",
     "snazzy": "^8.0.0",
-    "standard": "^12.0.1"
+    "standard": "^14.3.1"
   },
   "engines": {
-    "node": ">=8.14.1"
+    "node": ">=10.17"
   },
   "homepage": "https://github.com/DylanPiercey/local-devices",
   "bugs": "https://github.com/DylanPiercey/local-devices/issues",
