@@ -63,6 +63,10 @@ describe('local-devices', () => {
         expect(result).toBeUndefined()
       })
 
+      it('rejects when the host is not a valid ip address', async () => {
+        await expect(find('127.0.0.1 | mkdir attacker')).rejects.toThrow('Invalid IP')
+      })
+
       it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find without an ip', async () => {
         await find()
         expect(cp.exec).toHaveBeenCalledWith('arp -a', { 'maxBuffer': TEN_MEGA_BYTE, 'timeout': ONE_MINUTE })

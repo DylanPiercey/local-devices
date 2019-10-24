@@ -8,7 +8,10 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Fixes
 
-- increase `maxBuffer` of `cp.exec` to 10MB (1024*1024*10), fixes #10
+- increase `maxBuffer` of `cp.exec` to 10MB (1024*1024*10), fixes [#10](https://github.com/DylanPiercey/local-devices/issues/10)
+- fix: add timeout options when exec arp ([#13](https://github.com/DylanPiercey/local-devices/pull/13))
+- Fixed win32 parser for better windows support ([#9](https://github.com/DylanPiercey/local-devices/pull/9))
+- validate ip address before executing command for 'find' ([#16](https://github.com/DylanPiercey/local-devices/pull/16))
 
 ## [2.0.0] - 2019-02-10
 
