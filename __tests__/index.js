@@ -69,12 +69,12 @@ describe('local-devices', () => {
 
       it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find without an ip', async () => {
         await find()
-        expect(cp.exec).toHaveBeenCalledWith('arp -a', { 'maxBuffer': TEN_MEGA_BYTE, 'timeout': ONE_MINUTE })
+        expect(cp.exec).toHaveBeenCalledWith('arp -a', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
       })
 
       it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find with a single ip', async () => {
         await find('192.168.0.242')
-        expect(cp.exec).toHaveBeenCalledWith('arp -n 192.168.0.242', { 'maxBuffer': TEN_MEGA_BYTE, 'timeout': ONE_MINUTE })
+        expect(cp.exec).toHaveBeenCalledWith('arp -n 192.168.0.242', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
       })
     })
   })
