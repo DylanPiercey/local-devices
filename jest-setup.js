@@ -6,6 +6,7 @@ const mockHosts = [
   '? (192.168.0.212) at 00:12:34:56:78:91 on en0 ifscope [ethernet]',
   '? (192.168.0.222) at 00:12:34:56:78:92 on en0 ifscope [ethernet]',
   '? (192.168.0.232) at 00:12:34:56:78:93 on en0 ifscope [ethernet]',
+  '? (192.168.1.234) at 00:12:34:56:78:94 on en0 ifscope [ethernet]',
   // "special" cases (eg. unresolved hosts)
   '? (192.168.0.242) at (incomplete) on en0 ifscope [ethernet]', // host is in the list but incomplete
   '192.168.0.243 (192.168.0.243) -- no entry' // host has no entry in the arp table
@@ -16,6 +17,7 @@ const mockLinuxHosts = [
   '? (192.168.0.212) at 00:12:34:56:78:91 [ether] on eth0',
   '? (192.168.0.222) at 00:12:34:56:78:92 [ether] on eth0',
   '? (192.168.0.232) at 00:12:34:56:78:93 [ether] on eth0',
+  '? (192.168.1.234) at 00:12:34:56:78:94 [ether] on eth0',
   // "special" cases (eg. unresolved hosts)
   '? (192.168.0.242) at <incomplete> on eth0',
   '192.168.0.243 (192.168.0.243) -- no entry' // host has no entry in the arp table
@@ -27,7 +29,8 @@ const mockWinHosts = [
   '192.168.0.202	00-12-34-56-78-90	dynamic',
   '192.168.0.212	00-12-34-56-78-91	dynamic',
   '192.168.0.222	00-12-34-56-78-92	dynamic',
-  '192.168.0.232	00-12-34-56-78-93	dynamic'
+  '192.168.0.232	00-12-34-56-78-93	dynamic',
+  '192.168.1.234	00-12-34-56-78-94	dynamic',
 ]
 /* eslint-enable */
 
@@ -135,11 +138,11 @@ jest.mock('os', () => ({
     en5:
       [{
         address: '192.168.0.200',
-        netmask: '255.255.255.0',
+        netmask: '255.255.254.0',
         family: 'IPv4',
         mac: '00:12:34:56:78:99',
         internal: false,
-        cidr: '192.168.0.200/24'
+        cidr: '192.168.0.0/23'
       }]
   })
 }))

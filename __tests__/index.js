@@ -31,13 +31,38 @@ describe('local-devices', () => {
 
       it('returns the result of all IPs', async () => {
         const result = await find()
+        console.log(platform, result)
         expect(result).toEqual([
           { name: '?', ip: '192.168.0.202', mac: '00:12:34:56:78:90' },
           { name: '?', ip: '192.168.0.212', mac: '00:12:34:56:78:91' },
           { name: '?', ip: '192.168.0.222', mac: '00:12:34:56:78:92' },
-          { name: '?', ip: '192.168.0.232', mac: '00:12:34:56:78:93' }
+          { name: '?', ip: '192.168.0.232', mac: '00:12:34:56:78:93' },
+          { name: '?', ip: '192.168.1.234', mac: '00:12:34:56:78:94' }
         ])
       })
+
+      it('returns all IPs within /24 range', async () => {
+        const result = await find('192.168.1.0/24')
+        expect(result).toEqual([
+          { name: '?', ip: '192.168.1.234', mac: '00:12:34:56:78:94' }
+        ])
+      })
+
+      it('returns all IPs within 1-254 range', async () => {
+        const result = await find('192.168.1.1-192.168.1.254')
+        expect(result).toEqual([
+          { name: '?', ip: '192.168.1.234', mac: '00:12:34:56:78:94' }
+        ])
+      })
+
+      // third format (ranges with commas) is not supported by the library yet, see: https://github.com/JoeScho/get-ip-range/issues/8
+      // but once that gets fixed, the test should be ready for merge too
+      /* it('returns all IPs within .232,.254 range', async () => {
+        const result = await find('192.168.1.234,192.168.1.254')
+        expect(result).toEqual([
+          { name: '?', ip: '192.168.1.234', mac: '00:12:34:56:78:94' }
+        ])
+      }) */
 
       it('returns the result of a single IP (Note: undefined on win32)', async () => {
         const result = await find('192.168.0.222')
