@@ -19,6 +19,7 @@
   },
   "types": "./src/index.d.ts",
   "dependencies": {
+    "get-ip-range": "^2.1.0",
     "ip": "^1.1.5",
     "mz": "^2.7.0"
   },
