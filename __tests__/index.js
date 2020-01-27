@@ -31,7 +31,6 @@ describe('local-devices', () => {
 
       it('returns the result of all IPs', async () => {
         const result = await find()
-        console.log(platform, result)
         expect(result).toEqual([
           { name: '?', ip: '192.168.0.202', mac: '00:12:34:56:78:90' },
           { name: '?', ip: '192.168.0.212', mac: '00:12:34:56:78:91' },
