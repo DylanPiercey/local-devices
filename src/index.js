@@ -40,7 +40,7 @@ module.exports = function findLocalDevices (address) {
     if (address) {
       if (new RegExp('/|-').test(key)) {
         // range of IPs detected
-        lock[key] = arpAll().then(unlock(key))
+        lock[key] = pingServers().then(arpAll).then(unlock(key))
       } else {
         // address given
         lock[key] = pingServer(address).then(arpOne).then(unlock(key))
