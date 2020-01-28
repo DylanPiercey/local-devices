@@ -24,7 +24,7 @@ const options = {
 module.exports = function findLocalDevices (address) {
   var key = String(address)
 
-  if (address && new RegExp('/|-').test(address)) {
+  if (isRange(address)) {
     try {
       servers = getIPRange(key)
     } catch (error) {
@@ -37,21 +37,18 @@ module.exports = function findLocalDevices (address) {
   }
 
   if (!lock[key]) {
-    if (address) {
-      if (new RegExp('/|-').test(key)) {
-        // range of IPs detected
-        lock[key] = pingServers().then(arpAll).then(unlock(key))
-      } else {
-        // address given
-        lock[key] = pingServer(address).then(arpOne).then(unlock(key))
-      }
-    } else {
-      // no address given
+    if (!address || isRange(key)) {
       lock[key] = pingServers().then(arpAll).then(unlock(key))
+    } else {
+      lock[key] = pingServer(address).then(arpOne).then(unlock(key))
     }
   }
 
   return lock[key]
+}
+
+function isRange (address) {
+  return address && new RegExp('/|-').test(address)
 }
 
 /**
