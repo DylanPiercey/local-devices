@@ -54,15 +54,6 @@ describe('local-devices', () => {
         ])
       })
 
-      // third format (ranges with commas) is not supported by the library yet, see: https://github.com/JoeScho/get-ip-range/issues/8
-      // but once that gets fixed, the test should be ready for merge too
-      /* it('returns all IPs within .232,.254 range', async () => {
-        const result = await find('192.168.1.234,192.168.1.254')
-        expect(result).toEqual([
-          { name: '?', ip: '192.168.1.234', mac: '00:12:34:56:78:94' }
-        ])
-      }) */
-
       it('returns the result of a single IP (Note: undefined on win32)', async () => {
         const result = await find('192.168.0.222')
 
