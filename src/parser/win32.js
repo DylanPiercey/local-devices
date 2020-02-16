@@ -10,7 +10,6 @@ module.exports = function parseRow (row, servers) {
   if (!~servers.indexOf(ipAddress)) {
     return
   }
-
   // Parse mac
   var macAddress = chunks[1].replace(/-/g, ':')
   // Ignore unresolved hosts.
