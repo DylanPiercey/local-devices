@@ -2,12 +2,13 @@ var ip = require('ip')
 var os = require('os')
 var net = require('net')
 var cp = require('mz/child_process')
+var getIPRange = require('get-ip-range')
 
 var parseLinux = require('./parser/linux')
 var parseWin32 = require('./parser/win32')
 var parseRow = require('./parser')
 
-var servers = getServers()
+var servers
 var lock = {}
 
 const TEN_MEGA_BYTE = 1024 * 1024 * 10
@@ -22,13 +23,32 @@ const options = {
  */
 module.exports = function findLocalDevices (address) {
   var key = String(address)
-  lock[key] =
-    lock[key] ||
-    (address
-      ? pingServer(address).then(arpOne)
-      : pingServers().then(arpAll)
-    ).then(unlock(key))
+
+  if (isRange(address)) {
+    try {
+      servers = getIPRange(key)
+    } catch (error) {
+      // Note: currently doesn't throw the intended error message from the package maintainer
+      // It will still be caught, PR here though: https://github.com/JoeScho/get-ip-range/pull/6
+      return error
+    }
+  } else {
+    servers = getServers()
+  }
+
+  if (!lock[key]) {
+    if (!address || isRange(key)) {
+      lock[key] = pingServers().then(arpAll).then(unlock(key))
+    } else {
+      lock[key] = pingServer(address).then(arpOne).then(unlock(key))
+    }
+  }
+
   return lock[key]
+}
+
+function isRange (address) {
+  return address && new RegExp('/|-').test(address)
 }
 
 /**
