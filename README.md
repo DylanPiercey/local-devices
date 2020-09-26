@@ -89,7 +89,8 @@ Please feel free to create a PR!
 Thanks goes to these wonderful people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 <table>
   <tr>
     <td align="center"><a href="https://twitter.com/dylan_piercey"><img src="https://avatars2.githubusercontent.com/u/4985201?v=4" width="100px;" alt="Dylan Piercey"/><br /><sub><b>Dylan Piercey</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=DylanPiercey" title="Code">💻</a> <a href="#example-DylanPiercey" title="Examples">💡</a> <a href="#review-DylanPiercey" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/DylanPiercey/local-devices/commits?author=DylanPiercey" title="Documentation">📖</a> <a href="#ideas-DylanPiercey" title="Ideas, Planning, & Feedback">🤔</a> <a href="#question-DylanPiercey" title="Answering Questions">💬</a></td>
@@ -100,8 +101,13 @@ Thanks goes to these wonderful people ([emoji key][emojis]):
     <td align="center"><a href="https://me.howel52.com/"><img src="https://avatars0.githubusercontent.com/u/9854818?v=4" width="100px;" alt="howel52"/><br /><sub><b>howel52</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=howel52" title="Code">💻</a> <a href="https://github.com/DylanPiercey/local-devices/issues?q=author%3Ahowel52" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/LucaSoldi"><img src="https://avatars0.githubusercontent.com/u/5584781?v=4" width="100px;" alt="LucaSoldi"/><br /><sub><b>LucaSoldi</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=LucaSoldi" title="Code">💻</a> <a href="https://github.com/DylanPiercey/local-devices/issues?q=author%3ALucaSoldi" title="Bug reports">🐛</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Miosame"><img src="https://avatars1.githubusercontent.com/u/8201077?v=4" width="100px;" alt="Miosame"/><br /><sub><b>Miosame</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=Miosame" title="Code">💻</a> <a href="https://github.com/DylanPiercey/local-devices/commits?author=Miosame" title="Documentation">📖</a> <a href="#example-Miosame" title="Examples">💡</a></td>
+  </tr>
 </table>
 
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
