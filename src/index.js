@@ -19,9 +19,9 @@ const options = {
 }
 
 /**
- * Finds all local devices (ip and mac address) connectd to the current network.
+ * Finds all local devices (ip and mac address) connected to the current network.
  */
-module.exports = function findLocalDevices (address) {
+module.exports = function findLocalDevices (address, skipNameResolution = false) {
   var key = String(address)
 
   if (isRange(address)) {
@@ -38,7 +38,7 @@ module.exports = function findLocalDevices (address) {
 
   if (!lock[key]) {
     if (!address || isRange(key)) {
-      lock[key] = pingServers().then(arpAll).then(unlock(key))
+      lock[key] = pingServers().then((servers) => arpAll(servers, skipNameResolution)).then(unlock(key))
     } else {
       lock[key] = pingServer(address).then(arpOne).then(unlock(key))
     }
@@ -82,7 +82,7 @@ function pingServers () {
 }
 
 /**
- * Pings and individual server to update the arp table.
+ * Pings an individual server to update the arp table.
  */
 function pingServer (address) {
   return new Promise(function (resolve) {
@@ -101,8 +101,9 @@ function pingServer (address) {
 /**
  * Reads the arp table.
  */
-function arpAll () {
-  return cp.exec('arp -a', options).then(parseAll)
+function arpAll (_, skipNameResolution = false) {
+  const cmd = skipNameResolution ? 'arp -an' : 'arp -a'
+  return cp.exec(cmd, options).then(parseAll)
 }
 
 /**

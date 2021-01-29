@@ -75,6 +75,8 @@
       "describe",
       "beforeAll",
       "afterAll",
+      "beforeEach",
+      "afterEach",
       "it",
       "expect"
     ]
