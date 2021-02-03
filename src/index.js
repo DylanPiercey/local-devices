@@ -102,7 +102,8 @@ function pingServer (address) {
  * Reads the arp table.
  */
 function arpAll (_, skipNameResolution = false) {
-  const cmd = skipNameResolution ? 'arp -an' : 'arp -a'
+  const isWindows = process.platform.includes('win32')
+  const cmd = (skipNameResolution && !isWindows) ? 'arp -an' : 'arp -a'
   return cp.exec(cmd, options).then(parseAll)
 }
 

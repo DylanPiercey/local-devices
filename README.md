@@ -76,6 +76,18 @@ find('192.168.0.0/24').then(devices => {
     ]
     */
 })
+
+// Find all devices without resolving host names - this is more performant if hostnames are not needed
+find(null, true).then(devices => {
+    devices /*
+    [
+      { name: '?', ip: '192.168.0.10', mac: '...' },
+      { name: '?', ip: '192.168.0.50', mac: '...' },
+      { name: '?', ip: '192.168.0.155', mac: '...' },
+      { name: '?', ip: '192.168.0.211', mac: '...' }
+    ]
+    */
+})
 ```
 
 ## Contributions

@@ -42,6 +42,12 @@ describe('local-devices', () => {
         ])
       })
 
+      it('returns empty list if empty response returned', async () => {
+        cp.exec.mockImplementationOnce(_ => Promise.resolve())
+        const result = await find()
+        expect(result).toEqual([])
+      })
+
       it('returns all IPs within /24 range', async () => {
         const result = await find('192.168.1.0/24')
         expect(result).toEqual([
@@ -91,7 +97,11 @@ describe('local-devices', () => {
 
       it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find without an ip and skip name resolution', async () => {
         await find(null, true)
-        expect(cp.exec).toHaveBeenCalledWith('arp -an', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
+        if (process.platform.includes('win32')) {
+          expect(cp.exec).toHaveBeenCalledWith('arp -a', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
+        } else {
+          expect(cp.exec).toHaveBeenCalledWith('arp -an', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
+        }
       })
 
       it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find with a single ip', async () => {
