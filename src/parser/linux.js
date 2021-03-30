@@ -7,7 +7,7 @@ module.exports = function parseLinux (row, servers, parseOne) {
   var result = {}
 
   // Ignore unresolved hosts.
-  if (row === '' || row.indexOf('incomplete') >= 0) {
+  if (row === '' || row.indexOf('INCOMPLETE') >= 0 || row.indexOf('FAILED') >= 0 || row.indexOf('STALE') >= 0) {
     return
   }
 
@@ -30,14 +30,14 @@ function prepareOne (chunks) {
   return {
     name: '?', // a hostname is not provided on the raspberry pi (linux)
     ip: chunks[0],
-    mac: chunks[2]
+    mac: chunks[4]
   }
 }
 
 function prepareAll (chunks) {
   return {
-    name: chunks[0],
-    ip: chunks[1].match(/\((.*)\)/)[1],
-    mac: chunks[3]
+    name: '?', // ip n not show name
+    ip: chunks[0],
+    mac: chunks[4]
   }
 }
