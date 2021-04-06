@@ -102,7 +102,7 @@ function pingServer (address) {
  * Reads the arp table.
  */
 function arpAll () {
-  const script = process.platform.includes('linux') ? 'ip n' : 'arp -a';
+  const script = process.platform.includes('linux') ? 'ip n' : 'arp -a'
   return cp.exec(script, options).then(parseAll)
 }
 
@@ -143,7 +143,7 @@ function arpOne (address) {
     return Promise.reject(new Error('Invalid IP address provided.'))
   }
 
-  const script =  process.platform.includes('linux') ? 'ip n s ' + address : 'arp -n ' + address;
+  const script = process.platform.includes('linux') ? 'ip n s ' + address : 'arp -n ' + address
   return cp.exec(script, options).then(parseOne)
 }
 
