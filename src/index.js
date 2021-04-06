@@ -102,7 +102,8 @@ function pingServer (address) {
  * Reads the arp table.
  */
 function arpAll () {
-  return cp.exec('arp -a', options).then(parseAll)
+  const script = process.platform.includes('linux') ? 'ip n' : 'arp -a'
+  return cp.exec(script, options).then(parseAll)
 }
 
 /**
@@ -142,7 +143,8 @@ function arpOne (address) {
     return Promise.reject(new Error('Invalid IP address provided.'))
   }
 
-  return cp.exec('arp -n ' + address, options).then(parseOne)
+  const script = process.platform.includes('linux') ? 'ip n s ' + address : 'arp -n ' + address
+  return cp.exec(script, options).then(parseOne)
 }
 
 /**
@@ -159,8 +161,8 @@ function parseOne (data) {
       return
     }
 
-    // remove first row (containing "headlines")
-    var rows = data[0].split('\n').slice(1)[0]
+    // remove first row (containing "headlines", not in linux)
+    var rows = process.platform.includes('linux') ? data[0] : data[0].split('\n').slice(1)[0]
     return parseLinux(rows, servers, true)
   } else if (process.platform.includes('win32')) {
     return // currently not supported

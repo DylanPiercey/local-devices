@@ -13,13 +13,13 @@ const mockHosts = [
 ]
 
 const mockLinuxHosts = [
-  '? (192.168.0.202) at 00:12:34:56:78:90 [ether] on eth0',
-  '? (192.168.0.212) at 00:12:34:56:78:91 [ether] on eth0',
-  '? (192.168.0.222) at 00:12:34:56:78:92 [ether] on eth0',
-  '? (192.168.0.232) at 00:12:34:56:78:93 [ether] on eth0',
-  '? (192.168.1.234) at 00:12:34:56:78:94 [ether] on eth0',
+  '192.168.0.202 dev eth0 lladdr 00:12:34:56:78:90 REACHABLE',
+  '192.168.0.212 dev eth0 lladdr 00:12:34:56:78:91 REACHABLE',
+  '192.168.0.222 dev eth0 lladdr 00:12:34:56:78:92 REACHABLE',
+  '192.168.0.232 dev eth0 lladdr 00:12:34:56:78:93 REACHABLE',
+  '192.168.1.234 dev eth0 lladdr 00:12:34:56:78:94 REACHABLE',
   // "special" cases (eg. unresolved hosts)
-  '? (192.168.0.242) at <incomplete> on eth0',
+  '192.168.0.242 dev eth0 INCOMPLETE',
   '192.168.0.243 (192.168.0.243) -- no entry' // host has no entry in the arp table
 ]
 
@@ -53,9 +53,9 @@ function mockPrepareLinuxHosts (command) {
   let r = workingHosts.join('\n')
 
   // then define the current use-case (arp all or arp one)
-  if (command.includes('-n')) {
+  if (command.includes('n s')) {
     // receive the ip address of the request and the mac address from the mocked hosts
-    const ip = command.match(/arp -(.*){1} (.*)/)[2]
+    const ip = command.match(/ip (.*){1} (.*)/)[2]
     const host = mockLinuxHosts.find(i => i.indexOf(ip) >= 0)
 
     // and finally prepare the arp output for the tests
