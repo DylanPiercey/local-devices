@@ -38,7 +38,7 @@ module.exports = function findLocalDevices (address, skipNameResolution = false)
 
   if (!lock[key]) {
     if (!address || isRange(key)) {
-      lock[key] = pingServers().then((servers) => arpAll(servers, skipNameResolution)).then(unlock(key))
+      lock[key] = pingServers().then(() => arpAll(skipNameResolution)).then(unlock(key))
     } else {
       lock[key] = pingServer(address).then(arpOne).then(unlock(key))
     }
@@ -101,7 +101,7 @@ function pingServer (address) {
 /**
  * Reads the arp table.
  */
-function arpAll (_, skipNameResolution = false) {
+function arpAll (skipNameResolution = false) {
   const isWindows = process.platform.includes('win32')
   const cmd = (skipNameResolution && !isWindows) ? 'arp -an' : 'arp -a'
   return cp.exec(cmd, options).then(parseAll)
