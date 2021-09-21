@@ -76,6 +76,19 @@ find('192.168.0.0/24').then(devices => {
     ]
     */
 })
+
+// Find all devices without resolving host names (Uses 'arp -an') - this is more performant if hostnames are not needed 
+// (This flag is ignored on Windows machines as 'arp -an' is not supported)
+find(null, true).then(devices => {
+    devices /*
+    [
+      { name: '?', ip: '192.168.0.10', mac: '...' },
+      { name: '?', ip: '192.168.0.50', mac: '...' },
+      { name: '?', ip: '192.168.0.155', mac: '...' },
+      { name: '?', ip: '192.168.0.211', mac: '...' }
+    ]
+    */
+})
 ```
 
 ## Contributions

@@ -29,6 +29,8 @@ describe('local-devices', () => {
         })
       })
 
+      afterEach(() => cp.exec.mockClear())
+
       it('returns the result of all IPs', async () => {
         const result = await find()
         expect(result).toEqual([
@@ -38,6 +40,12 @@ describe('local-devices', () => {
           { name: '?', ip: '192.168.0.232', mac: '00:12:34:56:78:93' },
           { name: '?', ip: '192.168.1.234', mac: '00:12:34:56:78:94' }
         ])
+      })
+
+      it('returns empty list if empty response returned', async () => {
+        cp.exec.mockImplementationOnce(_ => Promise.resolve())
+        const result = await find()
+        expect(result).toEqual([])
       })
 
       it('returns all IPs within /24 range', async () => {
@@ -85,6 +93,15 @@ describe('local-devices', () => {
       it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find without an ip', async () => {
         await find()
         expect(cp.exec).toHaveBeenCalledWith('arp -a', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
+      })
+
+      it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find without an ip and skip name resolution', async () => {
+        await find(null, true)
+        if (process.platform.includes('win32')) {
+          expect(cp.exec).toHaveBeenCalledWith('arp -a', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
+        } else {
+          expect(cp.exec).toHaveBeenCalledWith('arp -an', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
+        }
       })
 
       it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find with a single ip', async () => {

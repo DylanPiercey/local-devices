@@ -31,6 +31,8 @@ const mockWinHosts = [
   '192.168.0.222	00-12-34-56-78-92	dynamic',
   '192.168.0.232	00-12-34-56-78-93	dynamic',
   '192.168.1.234	00-12-34-56-78-94	dynamic',
+  // "special" cases (eg. unresolved hosts)
+  '192.168.1.242	(incomplete)	dynamic',
 ]
 /* eslint-enable */
 
