@@ -4,6 +4,12 @@ All notable changes to this project will be documented here. The format is based
 on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project
 adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2021-09-21
+
+### Added
+
+- flag to skip name resolution ([#24](https://github.com/DylanPiercey/local-devices/pull/36))
+
 ## [3.1.0] - 2020-09-25
 
 ### Added
