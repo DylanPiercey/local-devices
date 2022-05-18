@@ -89,6 +89,19 @@ find({ skipNameResolution: true }).then(devices => {
     ]
     */
 })
+
+// Find all devices, specifying your own path for the `arp` binary 
+find({ arpPath: '/usr/sbin/arp' }).then(devices => {
+    devices /*
+    [
+      { name: '?', ip: '192.168.0.10', mac: '...' },
+      { name: '?', ip: '192.168.0.50', mac: '...' },
+      { name: '?', ip: '192.168.0.155', mac: '...' },
+      { name: '?', ip: '192.168.0.211', mac: '...' }
+    ]
+    */
+})
+```
 ```
 
 ## Contributions
