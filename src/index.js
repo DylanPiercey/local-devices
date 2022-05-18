@@ -21,7 +21,7 @@ const options = {
 /**
  * Finds all local devices (ip and mac address) connected to the current network.
  */
-module.exports = function findLocalDevices (address = '', skipNameResolution = false, arpPath = 'arp') {
+module.exports = function findLocalDevices ({ address = '', skipNameResolution = false, arpPath = 'arp' } = {}) {
   var key = String(address)
 
   if (isRange(address)) {
