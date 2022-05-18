@@ -108,6 +108,11 @@ describe('local-devices', () => {
         await find({ address: '192.168.0.242' })
         expect(cp.exec).toHaveBeenCalledWith('arp -n 192.168.0.242', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
       })
+
+      it('invokes cp.exec with maxBuffer of 10 MB, a timeout of 1 minute and a custom arp binary, when invoking find with an arpPath', async () => {
+        await (find({ arpPath: '/usr/sbin/arp' }))
+        expect(cp.exec).toHaveBeenCalledWith('/usr/sbin/arp -a', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
+      })
     })
   })
 })
