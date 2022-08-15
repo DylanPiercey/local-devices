@@ -95,6 +95,17 @@
         "doc",
         "example"
       ]
+    },
+    {
+      "login": "timrogers",
+      "name": "Tim Rogers",
+      "avatar_url": "https://avatars.githubusercontent.com/u/116134?v=4",
+      "profile": "https://timrogers.co.uk",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7

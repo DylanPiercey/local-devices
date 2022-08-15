@@ -129,6 +129,7 @@ Thanks goes to these wonderful people ([emoji key][emojis]):
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/Miosame"><img src="https://avatars1.githubusercontent.com/u/8201077?v=4" width="100px;" alt="Miosame"/><br /><sub><b>Miosame</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=Miosame" title="Code">💻</a> <a href="https://github.com/DylanPiercey/local-devices/commits?author=Miosame" title="Documentation">📖</a> <a href="#example-Miosame" title="Examples">💡</a></td>
+    <td align="center"><a href="https://timrogers.co.uk"><img src="https://avatars.githubusercontent.com/u/116134?v=4" width="100px;" alt="Tim Rogers"/><br /><sub><b>Tim Rogers</b></sub></a><br /><a href="https://github.com/DylanPiercey/local-devices/commits?author=timrogers" title="Code">💻</a> <a href="https://github.com/DylanPiercey/local-devices/commits?author=timrogers" title="Documentation">📖</a> <a href="https://github.com/DylanPiercey/local-devices/commits?author=timrogers" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
