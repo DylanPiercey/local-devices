@@ -1,6 +1,6 @@
 declare module "local-devices" {
 
-    function findLocalDevices(opts: { address?: any, skipNameResolution?: boolean, arpPath?: string }): Promise<findLocalDevices.IDevice[]>;
+    function findLocalDevices(opts?: { address?: any, skipNameResolution?: boolean, arpPath?: string }): Promise<findLocalDevices.IDevice[]>;
 
     namespace findLocalDevices
     {
