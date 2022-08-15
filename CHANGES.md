@@ -4,6 +4,18 @@ All notable changes to this project will be documented here. The format is based
 on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project
 adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2022-08-15
+
+### Changed
+
+### Added
+
+- support passing in an `arpPath` option to override the arp binary used ([#59](https://github.com/DylanPiercey/local-devices/pull/59))
+
+⚠ BREAKING CHANGES
+
+- switch to using an option object for the `find` api ([#59](https://github.com/DylanPiercey/local-devices/pull/59))
+
 ## [3.2.0] - 2021-09-21
 
 ### Added
