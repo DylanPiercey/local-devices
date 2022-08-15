@@ -21,7 +21,7 @@ const options = {
 /**
  * Finds all local devices (ip and mac address) connected to the current network.
  */
-module.exports = function findLocalDevices (address, skipNameResolution = false) {
+module.exports = function findLocalDevices ({ address = '', skipNameResolution = false, arpPath = 'arp' } = {}) {
   var key = String(address)
 
   if (isRange(address)) {
@@ -38,9 +38,9 @@ module.exports = function findLocalDevices (address, skipNameResolution = false)
 
   if (!lock[key]) {
     if (!address || isRange(key)) {
-      lock[key] = pingServers().then(() => arpAll(skipNameResolution)).then(unlock(key))
+      lock[key] = pingServers().then(() => arpAll(skipNameResolution, arpPath)).then(unlock(key))
     } else {
-      lock[key] = pingServer(address).then(arpOne).then(unlock(key))
+      lock[key] = pingServer(address).then(address => arpOne(address, arpPath)).then(unlock(key))
     }
   }
 
@@ -101,9 +101,9 @@ function pingServer (address) {
 /**
  * Reads the arp table.
  */
-function arpAll (skipNameResolution = false) {
+function arpAll (skipNameResolution = false, arpPath) {
   const isWindows = process.platform.includes('win32')
-  const cmd = (skipNameResolution && !isWindows) ? 'arp -an' : 'arp -a'
+  const cmd = (skipNameResolution && !isWindows) ? `${arpPath} -an` : `${arpPath} -a`
   return cp.exec(cmd, options).then(parseAll)
 }
 
@@ -139,12 +139,12 @@ function parseAll (data) {
 /**
  * Reads the arp table for a single address.
  */
-function arpOne (address) {
+function arpOne (address, arpPath) {
   if (!ip.isV4Format(address) && !ip.isV6Format(address)) {
     return Promise.reject(new Error('Invalid IP address provided.'))
   }
 
-  return cp.exec('arp -n ' + address, options).then(parseOne)
+  return cp.exec(`${arpPath} -n ${address}`, options).then(parseOne)
 }
 
 /**

@@ -49,21 +49,21 @@ describe('local-devices', () => {
       })
 
       it('returns all IPs within /24 range', async () => {
-        const result = await find('192.168.1.0/24')
+        const result = await find({ address: '192.168.1.0/24' })
         expect(result).toEqual([
           { name: '?', ip: '192.168.1.234', mac: '00:12:34:56:78:94' }
         ])
       })
 
       it('returns all IPs within 1-254 range', async () => {
-        const result = await find('192.168.1.1-192.168.1.254')
+        const result = await find({ address: '192.168.1.1-192.168.1.254' })
         expect(result).toEqual([
           { name: '?', ip: '192.168.1.234', mac: '00:12:34:56:78:94' }
         ])
       })
 
       it('returns the result of a single IP (Note: undefined on win32)', async () => {
-        const result = await find('192.168.0.222')
+        const result = await find({ address: '192.168.0.222' })
 
         if (process.platform.includes('win32')) {
           // not supported yet
@@ -77,17 +77,17 @@ describe('local-devices', () => {
       })
 
       it('returns undefined, when the host is not resolved', async () => {
-        const result = await find('192.168.0.242')
+        const result = await find({ address: '192.168.0.242' })
         expect(result).toBeUndefined()
       })
 
       it('returns undefined, when the host does not exist in arp table', async () => {
-        const result = await find('192.168.0.243')
+        const result = await find({ address: '192.168.0.243' })
         expect(result).toBeUndefined()
       })
 
       it('rejects when the host is not a valid ip address', async () => {
-        await expect(find('127.0.0.1 | mkdir attacker')).rejects.toThrow('Invalid IP')
+        await expect(find({ address: '127.0.0.1 | mkdir attacker' })).rejects.toThrow('Invalid IP')
       })
 
       it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find without an ip', async () => {
@@ -96,7 +96,7 @@ describe('local-devices', () => {
       })
 
       it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find without an ip and skip name resolution', async () => {
-        await find(null, true)
+        await find({ address: null, skipNameResolution: true })
         if (process.platform.includes('win32')) {
           expect(cp.exec).toHaveBeenCalledWith('arp -a', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
         } else {
@@ -105,8 +105,13 @@ describe('local-devices', () => {
       })
 
       it('invokes cp.exec with maxBuffer of 10 MB and a timeout of 1 minute, when invoking find with a single ip', async () => {
-        await find('192.168.0.242')
+        await find({ address: '192.168.0.242' })
         expect(cp.exec).toHaveBeenCalledWith('arp -n 192.168.0.242', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
+      })
+
+      it('invokes cp.exec with maxBuffer of 10 MB, a timeout of 1 minute and a custom arp binary, when invoking find with an arpPath', async () => {
+        await (find({ arpPath: '/usr/sbin/arp' }))
+        expect(cp.exec).toHaveBeenCalledWith('/usr/sbin/arp -a', { maxBuffer: TEN_MEGA_BYTE, timeout: ONE_MINUTE })
       })
     })
   })
