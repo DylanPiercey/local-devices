@@ -102,7 +102,6 @@ find({ arpPath: '/usr/sbin/arp' }).then(devices => {
     */
 })
 ```
-```
 
 ## Contributions
 
